@@ -1,0 +1,5 @@
+10.a.
+select Name from Client order by Name;
+
+b.
+select max
