@@ -1,0 +1,186 @@
+a
+INSERT  ALL
+INTO Employee VALUES (1 , 'Abey' , 'Tester' , 4 , 4 , '15-DEC-12' , 30000 , 500)
+INTO Employee VALUES (2 , 'Jesto' , 'Analyst' , 1 , 2 , '24-APR-11' , 25000 , 650)
+INTO Employee VALUES (3 , 'Adarsh' , 'Clerk' , 4 , 4 , '10-JAN-13' , 15000 , 500)
+INTO Employee VALUES (4 , 'Kevin' , 'Admin' , 5 , 2 , '10-OCT-13' , 20000 , 1750)
+INTO Employee VALUES (5 , 'Bony' , 'Manager' , NULL , 1 , '11-APR-11' , 50000 , 1000)
+INTO Employee VALUES (6 , 'Manu' , 'Supplier' , 1 , 3 , '19-JUN-13' , 5000 , 450)
+SELECT * FROM DUAL;
+
+b
+create table Dept (
+DeptNo NUMBER(5) PRIMARY KEY,
+DeptName VARCHAR2(20),
+Location VARCHAR2(20));
+
+INSERT ALL
+INTO Dept VALUES (1 , 'DeptA' , 'A block')
+INTO Dept VALUES (2 , 'DeptB' , 'B block')
+INTO Dept VALUES (3 , 'DeptC' , 'C block')
+INTO Dept VALUES (4 , 'DeptD' , 'D block')
+SELECT * FROM DUAL;
+
+c
+create table Client (
+Cno VARCHAR2(6),
+Name VARCHAR2(20),
+City VARCHAR2(15),
+PinCode NUMBER(8),
+State VARCHAR2(15),
+Baldue NUMBER(10,2));
+
+d
+INSERT  ALL
+INTO Client VALUES ('C01' , 'Nimmy' , 'Cochin' , 680324 , 'Kerala' , 14000)
+INTO Client VALUES ('C02' , 'Susan' , 'Cochin' , 680324 , 'Kerala' , 0)
+INTO Client VALUES ('C03' , 'Anjana' , 'Salem' , 680345 , 'TamilNadu' , 5000)
+INTO Client VALUES ('C04' , 'Sneha' , 'Pune' , 680223 , 'Maharashtra' , 500)
+INTO Client VALUES ('C05' , 'Annet' , 'Gandipuram' , 680321 , 'Karnataka' , 7600)
+INTO Client VALUES ('C06' , 'Ann' , 'Bombay' , 682111 , 'Maharashtra' , 2055)
+SELECT * FROM DUAL;
+
+e
+SELECT * FROM EMPLOYEE;
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650
+         3 Adarsh               Clerk                         4          4 10-JAN-13      15000        500
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        450
+
+SELECT * FROM DEPT;
+    DEPTNO DEPTNAME             LOCATION
+---------- -------------------- --------------------
+         1 DeptA                A block
+         2 DeptB                B block
+         3 DeptC                C block
+         4 DeptD                D block
+
+SELECT * FROM CLIENT;
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C01    Nimmy                Cochin              680324 Kerala               14000
+C02    Susan                Cochin              680324 Kerala                   0
+C03    Anjana               Salem               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+C05    Annet                Gandipuram          680321 Karnataka             7600
+C06    Ann                  Bombay              682111 Maharashtra           2055
+
+f
+INSERT INTO Employee VALUES (1 , 'Joey' , 'Developer' , 5 , 4 , '02-MAR-14' , 10000 , 750);
+INSERT INTO Employee VALUES (1 , 'Joey' , 'Developer' , 5 , 4 , '02-MAR-14' , 10000 , 750)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (U1503100.SYS_C0057992) violated
+
+g
+SELECT * FROM CLIENT WHERE ROWNUM<=4;
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C01    Nimmy                Cochin              680324 Kerala               14000
+C02    Susan                Cochin              680324 Kerala                   0
+C03    Anjana               Salem               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+
+h
+SELECT EMPNAME , HIREDATE , SALARY FROM EMPLOYEE;
+EMPNAME              HIREDATE      SALARY
+-------------------- --------- ----------
+Abey                 15-DEC-12      30000
+Jesto                24-APR-11      25000
+Adarsh               10-JAN-13      15000
+Kevin                10-OCT-13      20000
+Bony                 11-APR-11      50000
+Manu                 19-JUN-13       5000
+
+i
+SELECT * FROM EMPLOYEE WHERE EMPNAME LIKE 'A%' OR EMPNAME LIKE 'K%';
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500
+         3 Adarsh               Clerk                         4          4 10-JAN-13      15000        500
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+
+j
+SELECT DISTINCT(CITY) AS CITY FROM CLIENT;
+CITY
+---------------
+Bombay
+Cochin
+Salem
+Gandipuram
+Pune
+
+k
+SELECT * FROM EMPLOYEE WHERE HIREDATE > '31-DEC-2012' AND SALARY > 17500 AND EMPID IN(SELECT MANAGER FROM EMPLOYEE);
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+
+l
+SELECT * FROM EMPLOYEE WHERE EMPNAME BETWEEN 'E%' AND 'L%';
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+
+m
+UPDATE CLIENT SET CITY='Delhi' WHERE CNO='C03';
+1 row updated.
+SELECT * FROM CLIENT;
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C01    Nimmy                Cochin              680324 Kerala               14000
+C02    Susan                Cochin              680324 Kerala                   0
+C03    Anjana               Delhi               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+C05    Annet                Gandipuram          680321 Karnataka             7600
+C06    Ann                  Bombay              682111 Maharashtra           2055
+
+n
+UPDATE EMPLOYEE SET COMISSION=600 WHERE EMPNAME='Manu';
+1 row updated.
+SELECT * FROM EMPLOYEE;
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650
+         3 Adarsh               Clerk                         4          4 10-JAN-13      15000        500
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600
+
+o
+SELECT NAME || ' FROM ' || CITY || ' HAS ' || BALDUE || ' BALANCE DUE' AS REPORT FROM CLIENT;
+REPORT
+------------------------------------------
+Nimmy FROM Cochin HAS 14000 BALANCE DUE
+Susan FROM Cochin HAS 0 BALANCE DUE
+Anjana FROM Delhi HAS 5000 BALANCE DUE
+Sneha FROM Pune HAS 500 BALANCE DUE
+Annet FROM Gandipuram HAS 7600 BALANCE DUE
+Ann FROM Bombay HAS 2055 BALANCE DUE
+
+p
+SELECT BALDUE AS DUE_BALANCE FROM CLIENT;
+DUE_BALANCE
+-----------
+      14000
+          0
+       5000
+        500
+       7600
+       2055
+
+q
+SELECT * FROM CLIENT WHERE STATE!='Kerala';
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C03    Anjana               Delhi               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+C05    Annet                Gandipuram          680321 Karnataka             7600
+C06    Ann                  Bombay              682111 Maharashtra           2055
+---------END OF DAY 2----------

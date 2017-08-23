@@ -1,0 +1,38 @@
+create table Employee (
+EmpId NUMBER(5) PRIMARY KEY,
+EmpName VARCHAR2(20),
+Job VARCHAR2(20),
+Manager NUMBER(5),
+DeptNo NUMBER(5),
+HireDate DATE,
+Sal NUMBER(7,3));
+
+create table Dept (
+DeptNo NUMBER(5) PRIMARY KEY,
+DeptName VARCHAR2(20),
+Location VARCHAR2(20));
+
+ALTER TABLE Employee
+ADD Commission Number(5);
+
+ALTER TABLE Employee
+MODIFY Job VARCHAR2(20);
+
+ALTER TABLE Dept
+DROP COLUMN Location;
+
+ALTER TABLE Employee
+RENAME COLUMN Sal to Salary;
+
+DROP TABLE Dept;
+
+SELECT 'Joseph Varghese' AS NAME,
+MONTHS_BETWEEN(SYSDATE, '25-MAY-1997') /12 AS AGE
+FROM DUAL;
+
+SELECT sysdate FROM DUAL ;
+
+SELECT 15+10-5*2/5 FROM DUAL;
+
+SELECT TABLE_NAME
+FROM USER_TABLES;

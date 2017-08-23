@@ -1,0 +1,85 @@
+---------DAY 3--------
+3a
+ALTER TABLE CLIENT ADD PRIMARY KEY(CNO);
+Table altered.
+DESC CLIENT;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ CNO                                                   NOT NULL VARCHAR2(6)
+ NAME                                                           VARCHAR2(20)
+ CITY                                                           VARCHAR2(15)
+ PINCODE                                                        NUMBER(8)
+ STATE                                                          VARCHAR2(15)
+ BALDUE                                                         NUMBER(10,2)
+
+3b
+ALTER TABLE EMPLOYEE ADD FOREIGN KEY(MANAGER) REFERENCES EMPLOYEE(EMPID);
+Table altered.
+ALTER TABLE EMPLOYEE ADD FOREIGN KEY(DEPTNO) REFERENCES DEPT(DEPTNO);
+Table altered.
+DESC EMPLOYEE;
+ Name                                                  Null?    Type
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPID                                                 NOT NULL NUMBER(5)
+ EMPNAME                                                        VARCHAR2(20)
+ JOB                                                            VARCHAR2(20)
+ MANAGER                                                        NUMBER(5)
+ DEPTNO                                                         NUMBER(5)
+ HIREDATE                                                       DATE
+ SALARY                                                         NUMBER(8,3)
+ COMMISSION                                                     NUMBER(5)
+
+3c
+INSERT INTO EMPLOYEE VALUES(7 , 'Kate' , 'Developer' , 4 , 6 , '17-MAY-14' , 12000 , 500);
+INSERT INTO EMPLOYEE VALUES(7 , 'Kate' , 'Developer' , 4 , 6 , '17-MAY-14' , 12000 , 500)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (U1503100.SYS_C0061422) violated - parent key not found
+
+4a
+ALTER TABLE EMPLOYEE ADD UNIQUE(JOB);
+Table altered.
+INSERT INTO EMPLOYEE(EMPID , JOB) VALUES(7 , 'Tester');
+INSERT INTO EMPLOYEE(EMPID , JOB) VALUES(7 , 'Tester')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (U1503100.SYS_C0063161) violated
+
+4b
+ALTER TABLE EMPLOYEE ADD CHECK(COMISSION > 400);
+Table altered.
+INSERT INTO EMPLOYEE(EMPID , COMISSION) VALUES(7 , 399);
+INSERT INTO EMPLOYEE(EMPID , COMISSION) VALUES(7 , 399)
+*
+ERROR at line 1:
+ORA-02290: check constraint (U1503100.SYS_C0063172) violated
+
+4c
+ALTER TABLE EMPLOYEE MODIFY SALARY DEFAULT 25000;
+Table altered.
+INSERT INTO EMPLOYEE(EMPID) VALUES(7);
+1 row created.
+SELECT * FROM EMPLOYEE;
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY COMMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650
+         3 Adarsh               Clerk                         4          4 10-JAN-13      15000        500
+         4 Kevin                Admin                         5          2 10-OCT-13      20000       1750
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        450
+         7                                                                                25000
+
+4d
+ALTER TABLE EMPLOYEE DROP UNIQUE(JOB);
+Table altered.
+
+4e
+SELECT * FROM USER_CONS_COLUMNS WHERE TABLE_NAME = 'EMPLOYEE';
+OWNER                          CONSTRAINT_NAME                TABLE_NAME                     COLUMN_NAME        
+------------------------------ ------------------------------ ------------------------------ -------
+U1503100                       SYS_C0057992                   EMPLOYEE                       EMPID              
+U1503100                       SYS_C0061421                   EMPLOYEE                       MANAGER            
+U1503100                       SYS_C0061422                   EMPLOYEE                       DEPTNO             
+U1503100                       SYS_C0063172                   EMPLOYEE                       COMMISSION
+---------END OF DAY 3----------

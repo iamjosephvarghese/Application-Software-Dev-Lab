@@ -1,0 +1,47 @@
+---------DAY 4--------
+5a
+DELETE FROM CLIENT WHERE BALDUE <= 0;
+1 row deleted.
+SELECT * FROM CLIENT;
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C01    Nimmy                Cochin              680324 Kerala               14000
+C03    Anjana               Salem               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+C05    Annet                Gandipuram          680321 Karnataka             7600
+C06    Ann                  Bombay              682111 Maharashtra           2055
+
+5b
+ROLLBACK;
+Rollback complete.
+SELECT * FROM CLIENT;
+CNO    NAME                 CITY               PINCODE STATE               BALDUE
+------ -------------------- --------------- ---------- --------------- ----------
+C01    Nimmy                Cochin              680324 Kerala               14000
+C02    Susan                Cochin              680324 Kerala                   0
+C03    Anjana               Salem               680345 TamilNadu             5000
+C04    Sneha                Pune                680223 Maharashtra            500
+C05    Annet                Gandipuram          680321 Karnataka             7600
+C06    Ann                  Bombay              682111 Maharashtra           2055
+
+6a
+GRANT ALL ON CLIENT TO U1503101;
+Grant succeeded.
+
+6b
+GRANT SELECT, INSERT ON CLIENT TO U1503102;
+Grant succeeded.
+
+6c
+REVOKE ALL ON CLIENT FROM U1503101;
+Revoke succeeded.
+
+6d
+REVOKE SELECT, INSERT ON CLIENT FROM U1503102;
+Revoke succeeded.
+
+6e
+SAVEPOINT DAY4;
+Savepoint created.
+---------END OF DAY 4----------
+
