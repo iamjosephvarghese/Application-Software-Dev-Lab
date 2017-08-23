@@ -1,0 +1,55 @@
+7.a.
+create view CUST_VW
+as select EmpId,EmpName,Job,Manager
+from Employee;
+
+b.
+update cust_vw set Job='Senior Clerk' where Job='Clerk';
+
+c.
+alter table employee drop constraint SYS_C00643111;
+
+delete cust_vw where EmpName='Kevin';
+
+d.
+drop view cust_vw;
+
+8.a.
+select power(16,5) from dual;
+
+b.
+select length('Application') from dual;
+
+c.
+select last_day(sysdate) from dual;
+
+d.
+select to_char(65432,'$99999') from dual;
+
+e.
+select CURRENT_TIMESTAMP from dual;
+
+f.
+select extract(year from hiredate) from employee;
+
+g.
+select months_between(sysdate,hiredate) from employee;
+
+h.
+select count(distinct(deptname)) from dept;
+  
+i.
+select to_char(hiredate,'day,dd"th" month,yyyy') from employee;
+
+9.
+a.
+select sum(baldue) from client;
+
+b.
+select count(*) from employee;
+
+c.
+select min(baldue),max(baldue) from client;
+
+d.
+select avg(salary) from employee;
