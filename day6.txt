@@ -2,4 +2,165 @@
 select Name from Client order by Name;
 
 b.
-select max
+select deptno,max(salary) from employee group by deptno;
+
+
+    DEPTNO MAX(SALARY)
+---------- -----------
+         1       50000
+                 25000
+         2       25000
+         4       30000
+         3        5000
+
+c.
+SELECT DEPTNO, MIN(SALARY) FROM EMPLOYEE GROUP BY DEPTNO HAVING DEPTNO!=1;
+
+
+    DEPTNO MIN(SALARY)
+---------- -----------
+         2       25000
+         4       15000
+         3        5000
+
+11.a.
+ select deptno from employee union select deptno from employee;
+
+DEPTNO
+------
+     1
+     2
+     3
+     4
+
+b.
+select deptno from employee minus select deptno from employee;
+
+no rows selected
+
+c.
+SELECT EMPNAME FROM EMPLOYEE WHERE SALARY>(SELECT SALARY FROM EMPLOYEE WHERE EMPNAME='Adarsh');
+
+
+EMPNAME
+--------------------
+Abey
+Jesto
+Bony
+
+
+d.
+select empname from employee where salary < (select min(salary) from employee group by deptno having deptno=4);
+
+
+EMPNAME
+--------------------
+Manu
+
+
+e.
+select empname,salary from employee where salary > (select min(salary) from employee) and job like 'A%';
+
+
+EMPNAME                  SALARY
+-------------------- ----------
+Jesto                     25000
+
+
+f.
+SELECT * FROM EMPLOYEE, DEPT WHERE EMPLOYEE.DEPTNO=DEPT.DEPTNO ORDER BY EMPID;
+
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY  COMISSION     DEPTNO DEPTNAME             LOC
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500          4 DeptD                D block
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650          2 DeptB                B block
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      15000        500          4 DeptD                D block
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000          1 DeptA                A block
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600          3 DeptC                C block
+
+
+g.
+
+SELECT * FROM EMPLOYEE, DEPT WHERE EMPLOYEE.DEPTNO!=DEPT.DEPTNO ORDER BY EMPID;
+
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY  COMISSION     DEPTNO DEPTNAME             LOC
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500          1 DeptA                A block
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500          2 DeptB                B block
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500          3 DeptC                C block
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650          1 DeptA                A block
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650          3 DeptC                C block
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650          4 DeptD                D block
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      15000        500          1 DeptA                A block
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      15000        500          2 DeptB                B block
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      15000        500          3 DeptC                C block
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000          2 DeptB                B block
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000          3 DeptC                C block
+
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY  COMISSION     DEPTNO DEPTNAME             LOC
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000          4 DeptD                D block
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600          1 DeptA                A block
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600          2 DeptB                B block
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600          4 DeptD                D block
+
+15 rows selected.
+
+
+h.
+SELECT E.EMPNAME , E.JOB , M.EMPNAME AS MANAGER
+FROM EMPLOYEE E LEFT OUTER JOIN EMPLOYEE M
+ON E.MANAGER = M.EMPID;
+
+
+     EMPID EMPNAME              JOB                     MANAGER     DEPTNO HIREDATE      SALARY  COMISSION
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----
+         1 Abey                 Tester                        4          4 15-DEC-12      30000        500
+         2 Jesto                Analyst                       1          2 24-APR-11      25000        650
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      15000        500
+         5 Bony                 Manager                                  1 11-APR-11      50000       1000
+         6 Manu                 Supplier                      1          3 19-JUN-13       5000        600
+         7                                                                                25000
+
+6 rows selected.
+
+i.
+SELECT E.EMPNAME , E.JOB , M.EMPNAME AS MANAGER
+FROM EMPLOYEE E RIGHT OUTER JOIN EMPLOYEE M
+ON E.MANAGER = M.EMPID;
+
+
+EMPNAME              JOB                  MANAGER
+-------------------- -------------------- --------------
+Manu                 Supplier             Abey
+Jesto                Analyst              Abey
+                                          Jesto
+                                          Adarsh
+                                          Bony
+                                          Manu
+
+
+7 rows selected.
+
+
+j.
+SELECT E.EMPNAME , E.JOB , M.EMPNAME AS MANAGER
+FROM EMPLOYEE E FULL OUTER JOIN EMPLOYEE M
+ON E.MANAGER = M.EMPID;
+
+
+EMPNAME              JOB                  MANAGER
+-------------------- -------------------- ------------------
+Abey                 Tester
+Jesto                Analyst              Abey
+Adarsh               Senior Clerk
+Bony                 Manager
+Manu                 Supplier             Abey
+
+                                          Jesto
+                                          Adarsh
+                                          Bony
+                                          Manu
+
+
+11 rows selected.
