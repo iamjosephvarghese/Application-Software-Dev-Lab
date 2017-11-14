@@ -1,0 +1,33 @@
+
+Wed Nov 08                                                                                                                                                                                     page    1
+                                                                                                EMPLOYEE
+
+        ID NAME                 JOB                     MANAGER     DEPTNO HIRE DATE     SALARY  COMISSION                                                                                              
+---------- -------------------- -------------------- ---------- ---------- --------- ---------- ----------                                                                                              
+         1 Abey                 Tester                        4          4 15-DEC-12      65000        500                                                                                              
+         2 Jesto                Analyst                       1          2 24-APR-11      65000        650                                                                                              
+         3 Adarsh               Senior Clerk                  4          4 10-JAN-13      65000        500                                                                                              
+         5 Bony                 Manager                                  1 11-APR-11      65000       1000                                                                                              
+         6 Manu                 Supplier                      1          3 19-JUN-13      65000        600                                                                                              
+         7                                                                                65000                                                                                                         
+         8 joseph               student                                                   65000                                                                                                         
+        10 j                    s                             1          2 12-DEC-14      65000        525                                                                                              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                  END
+
+8 rows selected.
+
